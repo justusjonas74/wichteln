@@ -50,25 +50,22 @@ function App() {
         <div className="container">
 
 
-          <div className="row vertical-center">
-            <div className="p-5 mb-4 bg-light rounded-3 bg-opacity-75"> 
-              <div className="container-fluid py-5">
-
+          <div className="row vertical-center justify-content-center">
+            <div className="p-5 mb-4 bg-light rounded-3 bg-opacity-75 col-md-6 ">
+    
                 <h1 className="display-5 fw-bold">Wichtelmaschine</h1>
-                <p className="col-md-4 fs-4">Für wen bin ich in diesem Jahr der Wichtel?</p>
-                <div className="col-md-offset-4 col-md-4">
+                <p className="fs-4">Für wen bin ich in diesem Jahr der Wichtel?</p>
 
-                  {(!wichtel && !isLoading) &&
-                    <input placeholder="Hier den Code eingeben" type="text" className="form-control form-control-lg" onChange={(e) => setInputValue(e.target.value)} />
-                  }
-                  {(!wichtel && isLoading) &&
-                    "Lädt...."
-                  }
-                  {wichtel &&
-                    `${wichtel}`
-                  }
-                </div>
-              </div>
+                {(!wichtel && !isLoading) &&
+                  <input placeholder="Hier den Code eingeben" type="text" className="form-control form-control-lg" onChange={(e) => setInputValue(e.target.value)} />
+                }
+                {(!wichtel && isLoading) &&
+                  "Lädt...."
+                }
+                {wichtel &&
+                  `${wichtel}`
+                }
+
             </div>
 
           </div>
