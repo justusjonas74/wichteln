@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import Snowfall from 'react-snowfall'
+
+
+// minified version is also included
+import 'react-toastify/dist/ReactToastify.min.css';
+import './App.css'
+
 
 function App() {
 
@@ -11,7 +18,7 @@ function App() {
   useEffect(() => {
     const fetchCodeWord = async () => {
       setIsLoading(true)
-      const res = await fetch('/data/' + inputValue)
+      const res = await fetch('data/' + inputValue)
 
       if (!res.ok || !res.body) {
         toast.error("Da hat etwas nicht geklappt. Vielleicht stimmt der Code nicht?!")
@@ -32,18 +39,44 @@ function App() {
 
   return (
     <>
-      {(!wichtel && !isLoading) &&
-        <><input type="text" onChange={(e) => setInputValue(e.target.value)} />
-          <pre>{inputValue}</pre></>
-      }
-      {(!wichtel && isLoading) &&
-        "Lädt...."
-      }
-      {wichtel && 
-        `${wichtel}`
-      }
+      <Snowfall />
+      <div className=" Logo" style={{
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        width: '100vw',
+        height: '100vh'
+      }}>
+        <div className="container">
 
+
+          <div className="row vertical-center">
+            <div className="p-5 mb-4 bg-light rounded-3 bg-opacity-75"> 
+              <div className="container-fluid py-5">
+
+                <h1 className="display-5 fw-bold">Wichtelmaschine</h1>
+                <p className="col-md-4 fs-4">Für wen bin ich in diesem Jahr der Wichtel?</p>
+                <div className="col-md-offset-4 col-md-4">
+
+                  {(!wichtel && !isLoading) &&
+                    <input placeholder="Hier den Code eingeben" type="text" className="form-control form-control-lg" onChange={(e) => setInputValue(e.target.value)} />
+                  }
+                  {(!wichtel && isLoading) &&
+                    "Lädt...."
+                  }
+                  {wichtel &&
+                    `${wichtel}`
+                  }
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <ToastContainer />
     </>
+
   );
 }
 

@@ -1,6 +1,7 @@
  /public/data
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+/src/*.jpg
 
 # dependencies
 /node_modules
