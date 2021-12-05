@@ -58,6 +58,16 @@ class Game {
         }
     }
 
+    isMarried(name:string, name2:string){
+        if(name==="Robby" && name2==="Angela") {return true} 
+        else if(name2==="Robby" && name==="Angela") {return true} 
+        else if(name2==="Kathleen" && name==="Sören") {return true} 
+        else if(name==="Kathleen" && name2==="Sören") {return true}
+        else if(name==="Heidi" && name2==="Francis") {return true}
+        else if(name2==="Heidi" && name==="Francis") {return true}
+        else {return false}
+    }
+
     reset() {
         this.players.forEach(player=>{
             player.istWichtelFuer = undefined
@@ -73,15 +83,15 @@ class Game {
 
     saveToDisk(){
         rimraf.sync("./public/data/*")
-        let invitations = ""
+        let invitations = "<html><body>"
         this.players.forEach(player => {
             const fileName = "./public/data/" +  player.hashString
             const content = player.istWichtelFuer ? player.istWichtelFuer.name : "Ooops. Da ist etwas schief gegangen"
             fs.writeFileSync(fileName,content)
 
-            invitations += `Liebe(r) ${player.name}, \num zu erfahren, für wen du am Heiligabend der Wichtel bist, gehe auf https://wichteln.francisdoege.com und gib dort deinen persönlichen Code ein: ${player.hashString}\n\n`
+            invitations += `<p>Liebe(r) ${player.name}, <br/>um zu erfahren, für wen du am Heiligabend der Wichtel bist, gehe auf <a href="https://wichteln.francisdoege.com">https://wichteln.francisdoege.com</a>und gib dort deinen persönlichen Code ein: ${player.hashString}</p>`
         })
-
+        invitations += "</body></html>"
         const fileName = "./public/data/ce51a06d-234d-4d18-8696-e6bc1b367eb0" 
         fs.writeFileSync(fileName, invitations)
         
@@ -96,7 +106,8 @@ class Game {
             const notTheSamePlayer = wichtel.id !== player.id
             // wird noch nicht bewichtelt
             const hasNoWichtelYet = !wichtel.wirdBewichteltVon
-            return (notTheSamePlayer && hasNoWichtelYet)
+            const isNotMarriedWithWichtel = !this.isMarried(player.name,wichtel.name)
+            return (notTheSamePlayer && hasNoWichtelYet && isNotMarriedWithWichtel)
         })
         if (!firstPlayerWithoutAWichtel){
             throw new Error("Geht nicht auf... Versuche es erneut.")
