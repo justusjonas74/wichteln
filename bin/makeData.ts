@@ -166,7 +166,7 @@ const game = new Game(...players)
 
 
 game.play()
-game.print()
+// game.print()
 game.saveToDisk()
 
 
